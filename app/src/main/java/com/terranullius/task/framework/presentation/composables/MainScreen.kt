@@ -5,9 +5,12 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.ImageSearch
 import androidx.compose.material.icons.filled.List
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -47,11 +50,24 @@ fun MainScreen(
         mutableStateOf(ListType.LINEAR)
     }
 
+    var searchQuery by remember {
+        mutableStateOf("")
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Images")
+                    TextField(
+                        value = searchQuery,
+                        onValueChange = {
+                            searchImage(it, viewModel)
+                        },
+                        leadingIcon = {
+                            Icon(imageVector = Icons.Default.ImageSearch, contentDescription = "")
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 },
                 actions = {
                     IconButton(onClick = {
@@ -79,6 +95,10 @@ fun MainScreen(
             navigateImageDetail(navController)
         }
     }
+}
+
+fun searchImage(query: String, viewModel: MainViewModel) {
+    viewModel.searchImages(query = query)
 }
 
 fun navigateImageDetail(navController: NavHostController) {
@@ -146,7 +166,7 @@ fun ImageList(
                         },
                     image = item,
                     imageHeight = imageHeight
-                ){
+                ) {
                     onCardClick(it)
                 }
             }
@@ -155,10 +175,10 @@ fun ImageList(
 
                 val chunkedList = images.chunked(2)
 
-                itemsIndexed(chunkedList) { _ : Int, chunkedItem: List<Image> ->
+                itemsIndexed(chunkedList) { _: Int, chunkedItem: List<Image> ->
 
                     Row(Modifier.fillMaxWidth()) {
-                        chunkedItem.forEachIndexed{ index : Int, image: Image ->
+                        chunkedItem.forEachIndexed { index: Int, image: Image ->
 
                             val translationXAnimState = getTranslationXAnim(index)
 
@@ -171,7 +191,7 @@ fun ImageList(
                                     },
                                 image = image,
                                 imageHeight = imageHeight
-                            ){
+                            ) {
                                 onCardClick(it)
                             }
                         }
@@ -184,20 +204,20 @@ fun ImageList(
 
 @Composable
 fun getTranslationXAnim(index: Int): State<Float> {
-    var translationXState by remember{
-        mutableStateOf(if (index%2==0) -1000f else 1000f)
+    var translationXState by remember {
+        mutableStateOf(if (index % 2 == 0) -1000f else 1000f)
     }
 
     val translationXAnimState = animateFloatAsState(targetValue = translationXState)
 
-    LaunchedEffect(Unit){
-        if (translationXState < 0f){
-            while (translationXState<0f){
+    LaunchedEffect(Unit) {
+        if (translationXState < 0f) {
+            while (translationXState < 0f) {
                 translationXState = translationXState.plus(100f)
                 delay(35L)
             }
-        } else{
-            while (translationXState > 0f){
+        } else {
+            while (translationXState > 0f) {
                 translationXState = translationXState.minus(100f)
                 delay(35L)
             }
@@ -225,7 +245,7 @@ private fun ImageItem(
             }
         ) { image ->
             Text(
-                text = image.title.take(15),
+                text = image.artist.take(15),
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 style = MaterialTheme.typography.h6,

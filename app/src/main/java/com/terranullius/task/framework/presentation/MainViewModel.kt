@@ -10,7 +10,9 @@ import com.terranullius.task.business.domain.state.StateResource
 import com.terranullius.task.business.interactors.imagelist.ImageListInteractors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CompletableJob
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,7 +20,7 @@ class MainViewModel @Inject constructor(
     private val imageListInteractors: ImageListInteractors
 ) : ViewModel() {
 
-    private val job: CompletableJob
+    private var job: CompletableJob? = null
 
     private val _imageStateFlow: MutableStateFlow<StateResource<List<Image>>> =
         MutableStateFlow(StateResource.None)
@@ -42,7 +44,14 @@ class MainViewModel @Inject constructor(
     }
 
     fun searchImages(query: String) {
+        if (job == null) {
+            job = Job()
+        }
+        viewModelScope.launch(job!!) {
+            imageListInteractors.searchImages.searchImages(query).collectLatest {
+                _imageStateFlow.value = it
+            }
+        }
 
-        imageListInteractors.searchImages.searchImages(query)
     }
 }

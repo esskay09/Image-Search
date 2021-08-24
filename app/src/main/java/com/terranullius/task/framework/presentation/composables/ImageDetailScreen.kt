@@ -45,7 +45,7 @@ fun ImageDetailScreen(
                 Scaffold(
                     floatingActionButton = {
                         FloatingActionButton(onClick = {
-                            viewModel.onShare(selectedImage.value!!.imageUrl)
+                            viewModel.onShare(selectedImage.value!!.pageUrl)
                         }) {
                             Icon(imageVector = Icons.Default.Share, contentDescription = "share")
                         }
@@ -98,7 +98,7 @@ private fun ImageDetailDescription(image: Image, modifier: Modifier = Modifier) 
         item{
             Row {
                 Text(
-                    text = image.title,
+                    text = image.artist,
                     style = MaterialTheme.typography.h5.copy(
                         fontWeight = FontWeight.Bold,
                         color = getHeadlineTextColor()
@@ -111,7 +111,7 @@ private fun ImageDetailDescription(image: Image, modifier: Modifier = Modifier) 
         }
 
         item{
-            Text(text = image.description, color = getTextColor())
+            Text(text = image.likes.toString(), color = getTextColor())
         }
 
         item{
@@ -123,7 +123,7 @@ private fun ImageDetailDescription(image: Image, modifier: Modifier = Modifier) 
                 Row(Modifier.align(Alignment.TopEnd)) {
                     Icon(Icons.Default.CalendarToday, contentDescription = "", tint = getTextColor())
                     Spacer(modifier = Modifier.width(3.dp))
-                    Text(text = image.publishedDate.substringBefore("T"), color = getTextColor())
+                    Text(text = image.id.toString(), color = getTextColor())
                 }
             }
         }

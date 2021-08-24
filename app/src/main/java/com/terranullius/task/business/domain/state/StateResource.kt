@@ -11,7 +11,9 @@ sealed class StateResource<out R> {
         return when (this) {
             is Success<*> -> "Success[data=$data]"
             is Error -> "Error[data=$message]"
+            is None -> "None"
             Loading -> "Loading"
+
         }
     }
 }
