@@ -50,8 +50,8 @@ fun ImageCard(
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
 
-            val painter = rememberImagePainter(data = image.imageUrl, builder = {
-                this.memoryCacheKey(image.title)
+            val painter = rememberImagePainter(data = image.largeImageUrl, builder = {
+                this.memoryCacheKey(image.id.toString())
                 crossfade(true)
             })
 

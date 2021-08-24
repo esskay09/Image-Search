@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -22,6 +22,7 @@ import com.terranullius.task.framework.presentation.MainViewModel
 import com.terranullius.task.framework.presentation.composables.components.ErrorComposable
 import com.terranullius.task.framework.presentation.composables.components.ImageCard
 import com.terranullius.task.framework.presentation.composables.theme.*
+import kotlin.random.Random
 
 @Composable
 fun ImageDetailScreen(
@@ -78,55 +79,21 @@ fun ImageDetailContent(
     imageHeight: Dp,
 ) {
     when (LocalConfiguration.current.orientation) {
-        ORIENTATION_LANDSCAPE -> ImageDetailContentLandScape(modifier = modifier, image = image, imageHeight = imageHeight)
-        ORIENTATION_PORTRAIT -> ImageDetailContentPotrait(modifier = modifier, image = image, imageHeight = imageHeight)
+        ORIENTATION_LANDSCAPE -> ImageDetailContentLandScape(
+            modifier = modifier,
+            image = image,
+            imageHeight = imageHeight
+        )
+        ORIENTATION_PORTRAIT -> ImageDetailContentPotrait(
+            modifier = modifier,
+            image = image,
+            imageHeight = imageHeight
+        )
         else -> ImageDetailContentPotrait(
             modifier = modifier,
             image = image,
             imageHeight = imageHeight
         )
-    }
-}
-
-@Composable
-private fun ImageDetailDescription(image: Image, modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier) {
-        item{
-            Spacer(modifier = Modifier.height(12.dp))
-        }
-
-        item{
-            Row {
-                Text(
-                    text = image.artist,
-                    style = MaterialTheme.typography.h5.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = getHeadlineTextColor()
-                    )
-                )
-            }
-        }
-        item{
-            Spacer(modifier = Modifier.height(18.dp))
-        }
-
-        item{
-            Text(text = image.likes.toString(), color = getTextColor())
-        }
-
-        item{
-            Spacer(modifier = Modifier.height(24.dp))
-        }
-
-        item{
-            Box(Modifier.fillMaxWidth()){
-                Row(Modifier.align(Alignment.TopEnd)) {
-                    Icon(Icons.Default.CalendarToday, contentDescription = "", tint = getTextColor())
-                    Spacer(modifier = Modifier.width(3.dp))
-                    Text(text = image.id.toString(), color = getTextColor())
-                }
-            }
-        }
     }
 }
 
@@ -175,4 +142,57 @@ fun ImageDetailContentLandScape(
         )
     }
 
+}
+
+@Composable
+private fun ImageDetailDescription(image: Image, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
+        item {
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        item {
+            Row {
+                Text(
+                    text = image.artist,
+                    style = MaterialTheme.typography.h5.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = getHeadlineTextColor()
+                    )
+                )
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(18.dp))
+        }
+
+        item {
+            Column(Modifier.padding(8.dp)) {
+                ImageDescriptionItem(text = image.likes.toString(), icon = Icons.Default.ThumbUp)
+                Spacer(modifier = Modifier.height(12.dp))
+                ImageDescriptionItem(text = image.views.toString(), icon = Icons.Default.Visibility)
+                Spacer(modifier = Modifier.height(12.dp))
+                ImageDescriptionItem(text = image.artist, icon = Icons.Default.Person)
+                Spacer(modifier = Modifier.height(12.dp))
+                ImageDescriptionItem(
+                    text = Random.nextInt(50, 850).toString(),
+                    icon = Icons.Default.Comment
+                )
+            }
+
+        }
+    }
+}
+
+@Composable
+fun ImageDescriptionItem(
+    modifier: Modifier = Modifier,
+    text: String,
+    icon: ImageVector
+) {
+    Row(modifier = modifier) {
+        Icon(icon, contentDescription = "", tint = getTextColor())
+        Spacer(modifier = Modifier.width(10.dp))
+        Text(text = text, color = getTextColor())
+    }
 }

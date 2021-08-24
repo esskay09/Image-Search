@@ -1,6 +1,7 @@
 package com.terranullius.task.business.data.util
 
 
+import android.util.Log
 import com.terranullius.task.business.data.network.ApiResult
 import com.terranullius.task.business.data.network.NetworkConstants.NETWORK_TIMEOUT
 import com.terranullius.task.business.data.network.NetworkErrors.NETWORK_ERROR_TIMEOUT
@@ -32,6 +33,7 @@ suspend fun <T> safeApiCall(
                     ApiResult.GenericError(code, NETWORK_ERROR_TIMEOUT)
                 }
                 is IOException -> {
+                    Log.d("AppDebug","${throwable.message}")
                     ApiResult.NetworkError
                 }
                 is HttpException -> {

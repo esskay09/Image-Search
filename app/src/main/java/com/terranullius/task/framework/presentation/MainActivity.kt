@@ -10,14 +10,17 @@ import androidx.lifecycle.lifecycleScope
 import com.terranullius.task.framework.presentation.composables.MyApp
 import com.terranullius.task.framework.presentation.util.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    @ExperimentalCoroutinesApi
     private val viewModel: MainViewModel by viewModels()
 
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

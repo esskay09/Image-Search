@@ -1,5 +1,6 @@
 package com.terranullius.task.business.data.network
 
+import android.util.Log
 import com.terranullius.task.business.data.network.NetworkErrors.NETWORK_DATA_NULL
 import com.terranullius.task.business.data.network.NetworkErrors.NETWORK_ERROR
 import com.terranullius.task.business.domain.state.StateResource
@@ -18,12 +19,14 @@ abstract class ApiResponseHandler <Data>(
         return when(response){
 
             is ApiResult.GenericError -> {
+                Log.d("AppDebug","${response.errorMessage}")
                 StateResource.Error(
                     message = "Reason: ${response.errorMessage.toString()}"
                 )
             }
 
             is ApiResult.NetworkError -> {
+                Log.d("AppDebug","${response}")
                 StateResource.Error(
                     message = "Reason: ${NETWORK_ERROR}"
                 )

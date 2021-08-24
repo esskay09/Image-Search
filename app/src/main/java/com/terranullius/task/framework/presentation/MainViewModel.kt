@@ -9,23 +9,27 @@ import com.terranullius.task.business.domain.state.Event
 import com.terranullius.task.business.domain.state.StateResource
 import com.terranullius.task.business.interactors.imagelist.ImageListInteractors
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CompletableJob
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
+@FlowPreview
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val imageListInteractors: ImageListInteractors
 ) : ViewModel() {
 
-    private var job: CompletableJob? = null
+    private val _searchQueryStateFLow: MutableStateFlow<String> = MutableStateFlow("Grand Canyon")
+    val searchQueryStateFLow: StateFlow<String>
+        get() = _searchQueryStateFLow
 
     private val _imageStateFlow: MutableStateFlow<StateResource<List<Image>>> =
         MutableStateFlow(StateResource.None)
+
     val imageStateFlow: StateFlow<StateResource<List<Image>>>
         get() = _imageStateFlow
+
 
     private val _selectedImage = mutableStateOf<Image?>(null)
     val selectedImage: State<Image?>
@@ -34,6 +38,22 @@ class MainViewModel @Inject constructor(
     private val _onShare = MutableStateFlow<Event<String?>>(Event(null))
     val onShare: StateFlow<Event<String?>>
         get() = _onShare
+
+    init {
+        viewModelScope.launch {
+            _searchQueryStateFLow.debounce(300)
+                .filter { query ->
+                    if (query.isBlank()) return@filter false else true
+                }
+                .distinctUntilChanged()
+                .flatMapLatest { query ->
+                    queryApi(query)
+                }
+                .collect {
+                    _imageStateFlow.value = it
+                }
+        }
+    }
 
     fun setSelectedImage(image: Image) {
         _selectedImage.value = image
@@ -44,14 +64,12 @@ class MainViewModel @Inject constructor(
     }
 
     fun searchImages(query: String) {
-        if (job == null) {
-            job = Job()
-        }
-        viewModelScope.launch(job!!) {
-            imageListInteractors.searchImages.searchImages(query).collectLatest {
-                _imageStateFlow.value = it
-            }
-        }
-
+        _searchQueryStateFLow.value = query
     }
+
+    private fun queryApi(query: String): Flow<StateResource<List<Image>>> {
+        return imageListInteractors.searchImages.searchImages(query)
+    }
+
+
 }

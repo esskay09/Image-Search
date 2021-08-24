@@ -9,7 +9,9 @@ import androidx.compose.ui.Modifier
 import com.terranullius.task.framework.presentation.MainViewModel
 import com.terranullius.task.framework.presentation.composables.theme.TaskTheme
 import com.terranullius.task.framework.presentation.composables.theme.mainPadding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Composable
 fun MyApp(
     modifier: Modifier = Modifier.fillMaxSize().padding(horizontal = mainPadding),

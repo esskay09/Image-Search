@@ -8,7 +8,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.terranullius.task.framework.presentation.MainViewModel
 import com.terranullius.task.framework.presentation.util.Screen
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Composable
 fun Navigation(modifier: Modifier = Modifier, viewModel: MainViewModel) {
 

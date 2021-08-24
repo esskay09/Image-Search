@@ -1,6 +1,8 @@
 package com.terranullius.task.framework.presentation.composables
 
+import android.content.res.Configuration
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,9 +11,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.GridView
-import androidx.compose.material.icons.filled.ImageSearch
-import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -34,38 +35,61 @@ import com.terranullius.task.framework.presentation.composables.theme.getTextCol
 import com.terranullius.task.framework.presentation.composables.theme.spaceBetweenImages
 import com.terranullius.task.framework.presentation.composables.util.ListType
 import com.terranullius.task.framework.presentation.util.Screen
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
     navController: NavHostController,
     viewModel: MainViewModel
 ) {
-
     val screenHeight = LocalConfiguration.current.screenHeightDp
-    val imageHeight = screenHeight.div(3.3).dp
+    val imageHeight =
+        if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) screenHeight.div(
+            1.2
+        ).dp else screenHeight.div(3.3).dp
 
     var listType by rememberSaveable {
         mutableStateOf(ListType.LINEAR)
     }
 
-    var searchQuery by remember {
-        mutableStateOf("")
-    }
+    val searchQuery = viewModel.searchQueryStateFLow.collectAsState()
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     TextField(
-                        value = searchQuery,
+                        value = searchQuery.value,
                         onValueChange = {
                             searchImage(it, viewModel)
                         },
                         leadingIcon = {
-                            Icon(imageVector = Icons.Default.ImageSearch, contentDescription = "")
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "Search",
+                                tint = getTextColor()
+                            )
                         },
+                        trailingIcon = {
+                             if (searchQuery.value.isNotBlank()){
+                                 Icon(
+                                     Icons.Default.Close,
+                                     contentDescription = "Close",
+                                     tint = getTextColor(),
+                                     modifier = Modifier.clickable {
+                                         viewModel.searchImages("")
+                                     }
+                                 )
+                             } else {}
+                        },
+                        singleLine = true,
+                        maxLines = 1,
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
                         modifier = Modifier.fillMaxWidth()
                     )
                 },
@@ -105,6 +129,7 @@ fun navigateImageDetail(navController: NavHostController) {
     navController.navigate(Screen.ImageDetail.route)
 }
 
+@ExperimentalCoroutinesApi
 fun setImageSelected(image: Image, viewModel: MainViewModel) {
     viewModel.setSelectedImage(image)
 }

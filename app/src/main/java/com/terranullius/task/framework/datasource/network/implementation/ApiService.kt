@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("api/")
+    @GET("api")
     suspend fun searchImages(
         @Query("key") key: String = "23053573-5c2c92d83274d064e4e19a789",
         @Query("image_type") type: String = "photo",
