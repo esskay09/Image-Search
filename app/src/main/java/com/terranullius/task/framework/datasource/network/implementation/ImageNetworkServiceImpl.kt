@@ -13,6 +13,6 @@ class ImageNetworkServiceImpl @Inject constructor(
 ) : ImageNetworkService {
 
     override suspend fun searchImage(searchString: String): List<Image> {
-        return apiService.searchImages(searchString = searchString).
+        return apiService.searchImages(searchString = searchString).imageDtoList.toImageList()
     }
 }

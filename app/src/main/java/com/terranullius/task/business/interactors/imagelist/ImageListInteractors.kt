@@ -4,5 +4,5 @@ import javax.inject.Inject
 
 // Use cases
 data class ImageListInteractors @Inject constructor(
-    val getAllImages: GetAllImages
+    val searchImages: SearchImages
 )

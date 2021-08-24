@@ -16,14 +16,14 @@ import javax.inject.Inject
  * */
 
 
-class GetAllImages @Inject constructor(private val imageNetworkDataSource: ImageNetworkDataSource) {
+class SearchImages @Inject constructor(private val imageNetworkDataSource: ImageNetworkDataSource) {
 
-    fun getAllImages(): Flow<StateResource<List<Image>>> = flow {
+    fun searchImages(query: String): Flow<StateResource<List<Image>>> = flow {
 
         emit(StateResource.Loading)
 
         val apiResult = safeApiCall(IO) {
-            imageNetworkDataSource.getAllImages()
+            imageNetworkDataSource.searchImages(query)
         }
 
         val apiResponse = object : ApiResponseHandler<List<Image>>(

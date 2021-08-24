@@ -5,6 +5,6 @@ import com.terranullius.task.business.domain.model.Image
 
 interface ImageNetworkDataSource {
 
-    suspend fun getAllImages(): List<Image>
+    suspend fun searchImages(query: String): List<Image>
 
 }

@@ -4,8 +4,8 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.terranullius.task.business.data.network.abstraction.ImageNetworkDataSource
 import com.terranullius.task.business.data.network.implementation.ImageNetworkDataSourceImpl
-import com.terranullius.task.business.interactors.imagelist.GetAllImages
 import com.terranullius.task.business.interactors.imagelist.ImageListInteractors
+import com.terranullius.task.business.interactors.imagelist.SearchImages
 import com.terranullius.task.framework.datasource.network.abstraction.ImageNetworkService
 import com.terranullius.task.framework.datasource.network.implementation.ApiService
 import com.terranullius.task.framework.datasource.network.implementation.ImageNetworkServiceImpl
@@ -14,7 +14,6 @@ import com.terranullius.task.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -23,7 +22,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
 
     @Singleton
     @Provides
@@ -71,16 +69,16 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun proviedsGetAlLImagesUseCase(imageNetworkDataSource: ImageNetworkDataSource): GetAllImages {
-        return GetAllImages(
+    fun proviedsGetAlLImagesUseCase(imageNetworkDataSource: ImageNetworkDataSource): SearchImages {
+        return SearchImages(
             imageNetworkDataSource
         )
     }
 
     @Singleton
     @Provides
-    fun providesImageListInteractors(getAllImages: GetAllImages): ImageListInteractors {
-        return ImageListInteractors(getAllImages)
+    fun providesImageListInteractors(searchImages: SearchImages): ImageListInteractors {
+        return ImageListInteractors(searchImages)
     }
 
 }

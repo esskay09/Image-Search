@@ -6,10 +6,10 @@ import com.terranullius.task.framework.datasource.network.abstraction.ImageNetwo
 import javax.inject.Inject
 
 
-class ImageNetworkDataSourceImpl @Inject constructor(private val imageNetworkService: ImageNetworkService) :
-    ImageNetworkDataSource {
+class ImageNetworkDataSourceImpl @Inject constructor(
+    private val imageNetworkService: ImageNetworkService) : ImageNetworkDataSource {
 
-    override suspend fun getAllImages(): List<Image> {
-        return imageNetworkService.getAllImages()
+    override suspend fun searchImages(query: String): List<Image> {
+        return imageNetworkService.searchImages(query)
     }
 }

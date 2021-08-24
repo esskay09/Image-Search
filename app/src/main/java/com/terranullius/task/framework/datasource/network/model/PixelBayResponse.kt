@@ -5,5 +5,5 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class PixelBayResponse(
-    @Json(name = "hits") val imageDto: List<ImageDto>
+    @Json(name = "hits") val imageDtoList: List<ImageDto>
 )
