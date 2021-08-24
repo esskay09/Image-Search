@@ -149,7 +149,7 @@ fun MainScreenContent(
             }
             is StateResource.Error -> {
                 val errorMsg = (imageStateFlow.value as StateResource.Error).message
-                ErrorComposable(msg = errorMsg)
+                ErrorComposable(msg = errorMsg.substringAfter("Reason:"))
             }
             is StateResource.Success -> {
                 val imageList = (imageStateFlow.value as StateResource.Success<List<Image>>).data
