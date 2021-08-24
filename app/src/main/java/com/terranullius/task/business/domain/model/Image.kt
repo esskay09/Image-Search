@@ -1,14 +1,17 @@
 package com.terranullius.task.business.domain.model
 
+import com.squareup.moshi.Json
+
 /**
 * Domain model
 * */
-
-
 data class Image(
-    val id: String,
-    val description: String,
-    val imageUrl: String,
-    val publishedDate: String,
-    val title: String
+    val id: Int,
+    val likes: Int,
+    val pageUrl: String,
+    val previewUrl: String,
+    val artist: String,
+    val views: Int,
+    val webImageUrl: String,
+    val largeImageUrl: String
 )

@@ -14,21 +14,27 @@ class NetworkMapper: EntityMapper<ImageDto, Image> {
 
         return Image(
             id = entity.id,
-            description = entity.description,
-            imageUrl = entity.imageUrl,
-            publishedDate = entity.publishedDate,
-            title = entity.title
-        )
+            likes = entity.likes,
+            pageUrl = entity.pageUrl,
+            previewUrl = entity.previewUrl,
+            artist = entity.artist,
+            views = entity.views,
+            webImageUrl = entity.webImageUrl,
+            largeImageUrl = entity.largeImageUrl
+            )
 
     }
 
     override fun mapToEntity(domainModel: Image): ImageDto {
             return ImageDto(
                 id = domainModel.id,
-                description = domainModel.description,
-                imageUrl = domainModel.imageUrl,
-                publishedDate = domainModel.publishedDate,
-                title = domainModel.title
+                likes = domainModel.likes,
+                pageUrl = domainModel.pageUrl,
+                previewUrl = domainModel.previewUrl,
+                artist = domainModel.artist,
+                views = domainModel.views,
+                webImageUrl = domainModel.webImageUrl,
+                largeImageUrl = domainModel.largeImageUrl
             )
     }
 }
@@ -36,19 +42,25 @@ class NetworkMapper: EntityMapper<ImageDto, Image> {
 fun List<ImageDto>.toImageList() = this.map {
     Image(
         id = it.id,
-        description = it.description,
-        imageUrl = it.imageUrl,
-        publishedDate = it.publishedDate,
-        title = it.title
+        likes = it.likes,
+        pageUrl = it.pageUrl,
+        previewUrl = it.previewUrl,
+        artist = it.artist,
+        views = it.views,
+        webImageUrl = it.webImageUrl,
+        largeImageUrl = it.largeImageUrl
     )
 }
 
 fun List<Image>.toImageDtoList() = this.map {
     ImageDto(
         id = it.id,
-        description = it.description,
-        imageUrl = it.imageUrl,
-        publishedDate = it.publishedDate,
-        title = it.title
+        likes = it.likes,
+        pageUrl = it.pageUrl,
+        previewUrl = it.previewUrl,
+        artist = it.artist,
+        views = it.views,
+        webImageUrl = it.webImageUrl,
+        largeImageUrl = it.largeImageUrl
     )
 }

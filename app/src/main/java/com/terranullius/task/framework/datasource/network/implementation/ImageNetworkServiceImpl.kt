@@ -12,7 +12,7 @@ class ImageNetworkServiceImpl @Inject constructor(
     private val apiService: ApiService
 ) : ImageNetworkService {
 
-    override suspend fun getAllImages(): List<Image> {
-        return apiService.getImages().toImageList()
+    override suspend fun searchImage(searchString: String): List<Image> {
+        return apiService.searchImages(searchString = searchString).
     }
 }
