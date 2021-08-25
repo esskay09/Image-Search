@@ -24,6 +24,10 @@ import com.terranullius.task.framework.presentation.composables.components.Image
 import com.terranullius.task.framework.presentation.composables.theme.*
 import kotlin.random.Random
 
+
+/**
+ * Calculate Screen Height for Supporting all screen sizes
+ * */
 @Composable
 fun ImageDetailScreen(
     modifier: Modifier = Modifier.fillMaxSize(),
@@ -78,6 +82,12 @@ fun ImageDetailContent(
     image: Image,
     imageHeight: Dp,
 ) {
+
+    /**
+     *  Set Different layout depending on screen orientation
+     * */
+
+
     when (LocalConfiguration.current.orientation) {
         ORIENTATION_LANDSCAPE -> ImageDetailContentLandScape(
             modifier = modifier,

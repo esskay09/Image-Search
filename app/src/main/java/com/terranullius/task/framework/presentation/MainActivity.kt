@@ -24,6 +24,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+        /**
+         * Collect and start share intent
+         * */
         lifecycleScope.launchWhenCreated {
             viewModel.onShare.collect {
                 it.getContentIfNotHandled()?.let {

@@ -11,6 +11,10 @@ import com.terranullius.task.framework.presentation.composables.theme.TaskTheme
 import com.terranullius.task.framework.presentation.composables.theme.mainPadding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+/**
+ * App theme and navigation applied to and accessible by all screens
+ * */
+
 @ExperimentalCoroutinesApi
 @Composable
 fun MyApp(

@@ -13,6 +13,11 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
+
+/**
+ * ViewModel for MainActivity and Composable Screens
+ * */
+
 @ExperimentalCoroutinesApi
 @FlowPreview
 @HiltViewModel
@@ -40,6 +45,11 @@ class MainViewModel @Inject constructor(
         get() = _onShare
 
     init {
+
+        /**
+         * Make Safe API requests with an interval of atleast 300ms, only for distinct query
+         * */
+
         viewModelScope.launch {
             _searchQueryStateFLow.debounce(300)
                 .filter { query ->

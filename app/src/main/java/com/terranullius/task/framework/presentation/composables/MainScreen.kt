@@ -47,6 +47,10 @@ fun MainScreen(
     navController: NavHostController,
     viewModel: MainViewModel
 ) {
+
+    /**
+     * Calculate Screen Height for Supporting all screen sizes
+     * */
     val screenHeight = LocalConfiguration.current.screenHeightDp
     val imageHeight =
         if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) screenHeight.div(
