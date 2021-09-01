@@ -41,7 +41,7 @@ class MainViewModel @Inject constructor(
         get() = _selectedImage
 
     private val _onShare = MutableStateFlow<Event<String?>>(Event(null))
-    val onShare: StateFlow<Event<String?>>
+    val onSet: StateFlow<Event<String?>>
         get() = _onShare
 
     init {

@@ -1,5 +1,6 @@
 package com.terranullius.task.framework.presentation.composables.components
 
+import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,13 +23,6 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
-import coil.size.Scale
-import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.skydoves.landscapist.CircularReveal
-import com.skydoves.landscapist.ImageLoadState
-import com.skydoves.landscapist.glide.GlideImage
 import com.terranullius.task.R
 import com.terranullius.task.business.domain.model.Image
 
@@ -51,7 +45,7 @@ fun ImageCard(
         Box(modifier = Modifier.fillMaxSize()) {
 
             val painter = rememberImagePainter(data = image.largeImageUrl, builder = {
-                this.memoryCacheKey(image.id.toString())
+                memoryCacheKey(image.id.toString())
                 crossfade(true)
             })
 

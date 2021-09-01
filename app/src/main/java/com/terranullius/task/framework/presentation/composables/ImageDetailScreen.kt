@@ -50,9 +50,9 @@ fun ImageDetailScreen(
                 Scaffold(
                     floatingActionButton = {
                         FloatingActionButton(onClick = {
-                            viewModel.onShare(selectedImage.value!!.pageUrl)
+                            viewModel.onShare(selectedImage.value!!.largeImageUrl)
                         }) {
-                            Icon(imageVector = Icons.Default.Share, contentDescription = "share")
+                            Icon(imageVectr = Icons.Default.Share, contentDescription = "share")
                         }
                     }, floatingActionButtonPosition = FabPosition.End
                 ) { paddingValues ->
@@ -94,12 +94,12 @@ fun ImageDetailContent(
             image = image,
             imageHeight = imageHeight
         )
-        ORIENTATION_PORTRAIT -> ImageDetailContentPotrait(
+        ORIENTATION_PORTRAIT -> ImageDetailContentPortrait(
             modifier = modifier,
             image = image,
             imageHeight = imageHeight
         )
-        else -> ImageDetailContentPotrait(
+        else -> ImageDetailContentPortrait(
             modifier = modifier,
             image = image,
             imageHeight = imageHeight
@@ -109,7 +109,7 @@ fun ImageDetailContent(
 
 
 @Composable
-private fun ImageDetailContentPotrait(
+private fun ImageDetailContentPortrait(
     modifier: Modifier,
     image: Image,
     imageHeight: Dp
