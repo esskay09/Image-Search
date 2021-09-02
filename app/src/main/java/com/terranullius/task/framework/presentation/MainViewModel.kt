@@ -40,9 +40,9 @@ class MainViewModel @Inject constructor(
     val selectedImage: State<Image?>
         get() = _selectedImage
 
-    private val _onShare = MutableStateFlow<Event<String?>>(Event(null))
-    val onSet: StateFlow<Event<String?>>
-        get() = _onShare
+    private val _onImageSet = MutableStateFlow<Event<String?>>(Event(null))
+    val onImageSet: StateFlow<Event<String?>>
+        get() = _onImageSet
 
     init {
 
@@ -69,8 +69,8 @@ class MainViewModel @Inject constructor(
         _selectedImage.value = image
     }
 
-    fun onShare(imageUrl: String) {
-        _onShare.value = Event(imageUrl)
+    fun onSetImage(imageUrl: String) {
+        _onImageSet.value = Event(imageUrl)
     }
 
     fun searchImages(query: String) {

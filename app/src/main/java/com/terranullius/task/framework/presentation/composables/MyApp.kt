@@ -18,8 +18,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @Composable
 fun MyApp(
-    modifier: Modifier = Modifier.fillMaxSize().padding(horizontal = mainPadding),
-    viewModel: MainViewModel
+    modifier: Modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = mainPadding),
+    viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
 
     TaskTheme {

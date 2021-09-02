@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
         wallpaperManager = WallpaperManager.getInstance(this)
 
         lifecycleScope.launchWhenCreated {
-            viewModel.onSet.collect {
+            viewModel.onImageSet.collect {
                 it.getContentIfNotHandled()?.let { imgUrl ->
                     startCrop(imgUrl)
                 }
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            MyApp(viewModel = viewModel)
+            MyApp()
         }
     }
 
@@ -69,18 +69,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
-    private fun setWallpaper(url: String) {
-        lifecycleScope.launchWhenCreated {
-            val bitmap = url.toBitmap()
-            kotlin.runCatching {
-                wallpaperManager.setBitmap(bitmap)
-                Toast.makeText(this@MainActivity, "Wallpaper changed", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -94,6 +82,16 @@ class MainActivity : ComponentActivity() {
 
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = UCrop.getError(data!!)
+        }
+    }
+
+    private fun setWallpaper(url: String) {
+        lifecycleScope.launchWhenCreated {
+            val bitmap = url.toBitmap()
+            kotlin.runCatching {
+                wallpaperManager.setBitmap(bitmap)
+                Toast.makeText(this@MainActivity, "Wallpaper changed", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

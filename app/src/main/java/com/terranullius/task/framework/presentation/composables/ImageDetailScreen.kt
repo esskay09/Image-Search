@@ -50,9 +50,9 @@ fun ImageDetailScreen(
                 Scaffold(
                     floatingActionButton = {
                         FloatingActionButton(onClick = {
-                            viewModel.onShare(selectedImage.value!!.largeImageUrl)
+                            viewModel.onSetImage(selectedImage.value!!.largeImageUrl)
                         }) {
-                            Icon(imageVectr = Icons.Default.Share, contentDescription = "share")
+                            Icon(imageVector = Icons.Default.Wallpaper, contentDescription = "wallpaper")
                         }
                     }, floatingActionButtonPosition = FabPosition.End
                 ) { paddingValues ->
