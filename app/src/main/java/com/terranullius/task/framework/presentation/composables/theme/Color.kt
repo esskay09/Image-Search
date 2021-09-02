@@ -10,6 +10,13 @@ val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
-@Composable fun getTextColor() = if(isSystemInDarkTheme()) Color.Gray else MaterialTheme.colors.onBackground
+val lightBlueHeadline = Color(0xF07E91FF)
+val primaryDisabled
+    @Composable get() = MaterialTheme.colors.primary.copy(alpha = 0.8f)
 
-@Composable fun getHeadlineTextColor() = if(isSystemInDarkTheme()) Color.Gray else MaterialTheme.colors.onBackground
+@Composable
+fun getTextColor() = if (isSystemInDarkTheme()) Color.Gray else MaterialTheme.colors.onBackground
+
+@Composable
+fun getHeadlineTextColor() =
+    if (isSystemInDarkTheme()) Color.Gray else MaterialTheme.colors.onBackground

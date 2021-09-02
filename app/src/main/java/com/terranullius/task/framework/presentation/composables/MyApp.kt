@@ -21,14 +21,13 @@ fun MyApp(
     modifier: Modifier = Modifier
         .fillMaxSize()
         .padding(horizontal = mainPadding),
-    viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
 
     TaskTheme {
         // A surface container using the 'background' color from the theme
         Surface(color = MaterialTheme.colors.background) {
 
-            Navigation(viewModel = viewModel, modifier = modifier)
+            Navigation(modifier = modifier)
         }
     }
 }
